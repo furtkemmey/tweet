@@ -49,4 +49,5 @@ class TweetTableViewCell: UITableViewCell {
             tweetCreatedLabel?.text = nil
         }
     }
+
 }

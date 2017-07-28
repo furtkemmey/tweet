@@ -86,7 +86,7 @@
                                     <outlet property="tweetProfileImageView" destination="SRN-CG-t7N" id="N1g-6w-ceW"/>
                                     <outlet property="tweetTextLabel" destination="4gY-Nt-bOg" id="E47-88-pEk"/>
                                     <outlet property="tweetUserLabel" destination="SSD-uI-MLc" id="AOH-dl-GqY"/>
-                                    <segue destination="fsP-kU-pE8" kind="show" identifier="tweetDetail" id="akw-Tj-GfS"/>
+                                    <segue destination="qfd-Hl-kly" kind="show" identifier="tweetDetailTable" id="dil-JH-Glw"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -102,7 +102,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="p5c-no-wy7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="431" y="73"/>
+            <point key="canvasLocation" x="474" y="88"/>
         </scene>
         <!--Tweet Detail View Controller-->
         <scene sceneID="yZN-f7-b10">
@@ -117,7 +117,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="E2Z-DR-O9w">
-                                <rect key="frame" x="19.5" y="72" width="336" height="195"/>
+                                <rect key="frame" x="19.5" y="28" width="336" height="239"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="4ae-PK-w8Q">
@@ -186,7 +186,52 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aXU-Yb-B2h" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1122" y="72"/>
+            <point key="canvasLocation" x="1807" y="88"/>
+        </scene>
+        <!--Tweet Detail Table Table View Controller-->
+        <scene sceneID="XOJ-Lp-BXb">
+            <objects>
+                <tableViewController id="qfd-Hl-kly" customClass="TweetDetailTableTableViewController" customModule="Smashtag" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="wbd-Ek-xk5">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="hashTag" id="zs7-NJ-aI6" customClass="TweetDetailTableTableViewCell" customModule="Smashtag" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zs7-NJ-aI6" id="6u1-mb-4um">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rg4-aS-Coo">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="Rg4-aS-Coo" firstAttribute="leading" secondItem="6u1-mb-4um" secondAttribute="leading" id="1XV-8T-Rk1"/>
+                                        <constraint firstAttribute="trailing" secondItem="Rg4-aS-Coo" secondAttribute="trailing" id="872-PF-EjV"/>
+                                        <constraint firstAttribute="bottom" secondItem="Rg4-aS-Coo" secondAttribute="bottom" id="Seh-am-sdM"/>
+                                        <constraint firstItem="Rg4-aS-Coo" firstAttribute="top" secondItem="6u1-mb-4um" secondAttribute="top" id="vYh-G1-mC9"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="hashTagLabel" destination="Rg4-aS-Coo" id="Mgc-ie-93j"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="qfd-Hl-kly" id="YHn-7t-XS5"/>
+                            <outlet property="delegate" destination="qfd-Hl-kly" id="w01-9j-ja2"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8Ig-Nt-vtG" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1133.5999999999999" y="87.706146926536732"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="2wc-lq-UI4">

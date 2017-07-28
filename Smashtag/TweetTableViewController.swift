@@ -16,7 +16,7 @@ class TweetTableViewController: UITableViewController, UITextFieldDelegate {
             //print(tweets[0])
         }
     }
-    
+    //search
     var searchText: String? {
         didSet {
             searchTextField?.text = searchText
@@ -72,8 +72,8 @@ class TweetTableViewController: UITableViewController, UITextFieldDelegate {
         tableView.rowHeight = UITableViewAutomaticDimension
         searchText = "#happy" //just for testing
     }
+    
     // MARK: - UITabelViewDataSource
-
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return tweets.count
@@ -86,7 +86,9 @@ class TweetTableViewController: UITableViewController, UITextFieldDelegate {
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        //data
         let tweet: Tweet = tweets[indexPath.section][indexPath.row]
+        //cell
         let cell = tableView.dequeueReusableCell(withIdentifier: "Tweet", for: indexPath)
 
         //non-custom cells
@@ -99,9 +101,13 @@ class TweetTableViewController: UITableViewController, UITextFieldDelegate {
         }
         return cell
     }
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "\(tweets.count-section)"
-    }
+//    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+//        return "\(tweets.count-section)" + " Header"
+//    }
+//    override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+//        return "\(tweets.count-section)" + " Footer"
+//    }
+        
     //MARK:- prepare segue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let identifier = segue.identifier {
@@ -113,6 +119,14 @@ class TweetTableViewController: UITableViewController, UITextFieldDelegate {
                         VCDetail.tweet = tweet
                     }
                 }
+            case "tweetDetailTable":
+                if let cell = sender as? TweetTableViewCell, let indexPath = tableView.indexPath(for: cell) {
+                    if let VCDetail = segue.destination as? TweetDetailTableTableViewController {
+                        let tweet: Tweet = tweets[indexPath.section][indexPath.row]
+                        VCDetail.tweet = tweet
+                    }
+                }
+                
             default: break
             }
         }
