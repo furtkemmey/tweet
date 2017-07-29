@@ -19,51 +19,36 @@ class TweetDetailTableTableViewController: UITableViewController {
     private func updateUI() {
         if let count = tweet?.media.count {
             if count > 0 {
-                if let  imageURL = tweet?.media[0].url {
-                    DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-                        let urlContents = try? Data(contentsOf: imageURL)
-                        if let imageData = urlContents, imageURL == self?.tweet?.media[0].url {
-                            DispatchQueue.main.async { [weak self] in
-                                self?.Image?.image = UIImage(data: imageData)
-                            }
-                        }
-                    }
-                    
-                }
+                self.ImageURL = tweet?.media[0].url
             } else {
                 //get image
-                if let profileImageURL = tweet?.user.profileImageURL {
-                    //FIXME: block main thread
-                    DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-                        let urlContents = try? Data(contentsOf: profileImageURL)
-                        if let imageData = urlContents, profileImageURL == self?.tweet?.user.profileImageURL {
-                            DispatchQueue.main.async { [weak self] in
-                                self?.Image?.image = UIImage(data: imageData)
-                            }
-                        }
-                    }
-                }else{
-                    Image?.image = nil
-                }
+                self.ImageURL = tweet?.user.profileImageURL
             }
         }
-        //get image
-//        if let profileImageURL = tweet?.user.profileImageURL {
-//            //FIXME: block main thread
-//            DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-//                let urlContents = try? Data(contentsOf: profileImageURL)
-//                if let imageData = urlContents, profileImageURL == self?.tweet?.user.profileImageURL {
-//                    DispatchQueue.main.async { [weak self] in
-//                        self?.Image?.image = UIImage(data: imageData)
-//                    }
-//                }
-//            }
-//        }else{
-//            Image?.image = nil
-//        }
+
     }
 
     @IBOutlet weak var Image: UIImageView!
+    var  ImageURL: URL? {
+        didSet {
+            //FIXME: block main thread
+            DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+                if let url = self?.ImageURL {
+                    let urlContents = try? Data(contentsOf: url)
+                    if let imageData = urlContents, url == self?.ImageURL {
+                        DispatchQueue.main.async { [weak self] in
+                            self?.Image?.image = UIImage(data: imageData)
+                        }
+                    }
+                } else {
+                    DispatchQueue.main.async { [weak self] in
+                        self?.Image?.image = nil
+                    }
+                }
+            }
+            
+        }
+    }
     
     // MARK: - Table view data source
     override func numberOfSections(in tableView: UITableView) -> Int {
