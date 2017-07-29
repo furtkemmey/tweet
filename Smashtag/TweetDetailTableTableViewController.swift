@@ -25,7 +25,6 @@ class TweetDetailTableTableViewController: UITableViewController {
                 self.ImageURL = tweet?.user.profileImageURL
             }
         }
-
     }
 
     @IBOutlet weak var Image: UIImageView!
@@ -38,6 +37,7 @@ class TweetDetailTableTableViewController: UITableViewController {
                     if let imageData = urlContents, url == self?.ImageURL {
                         DispatchQueue.main.async { [weak self] in
                             self?.Image?.image = UIImage(data: imageData)
+                            self?.Image?.sizeToFit()
                         }
                     }
                 } else {
@@ -46,7 +46,6 @@ class TweetDetailTableTableViewController: UITableViewController {
                     }
                 }
             }
-            
         }
     }
     

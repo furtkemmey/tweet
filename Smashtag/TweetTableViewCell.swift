@@ -31,6 +31,7 @@ class TweetTableViewCell: UITableViewCell {
                 if let imageData = urlContents, profileImageURL == self?.tweet?.user.profileImageURL {
                     DispatchQueue.main.async { [weak self] in
                         self?.tweetProfileImageView?.image = UIImage(data: imageData)
+                        self?.tweetProfileImageView?.sizeToFit()
                     }
                 }
             }
