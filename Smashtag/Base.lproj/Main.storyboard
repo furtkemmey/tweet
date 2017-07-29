@@ -197,12 +197,12 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <imageView key="tableHeaderView" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="Rne-LG-ivP">
-                            <rect key="frame" x="0.0" y="0.0" width="375" height="200"/>
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="174"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         </imageView>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="hashTag" id="zs7-NJ-aI6" customClass="TweetDetailTableTableViewCell" customModule="Smashtag" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="228" width="375" height="44"/>
+                                <rect key="frame" x="0.0" y="202" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zs7-NJ-aI6" id="6u1-mb-4um">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>

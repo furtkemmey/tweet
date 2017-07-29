@@ -22,7 +22,7 @@ class TweetDetailTableTableViewController: UITableViewController {
                 self.ImageURL = tweet?.media[0].url
             } else {
                 //get image
-                self.ImageURL = tweet?.user.profileImageURL
+//                self.ImageURL = tweet?.user.profileImageURL
             }
         }
     }
@@ -37,7 +37,14 @@ class TweetDetailTableTableViewController: UITableViewController {
                     if let imageData = urlContents, url == self?.ImageURL {
                         DispatchQueue.main.async { [weak self] in
                             self?.Image?.image = UIImage(data: imageData)
-                            self?.Image?.sizeToFit()
+//                            let fullScreenSize = UIScreen.main.bounds.size
+                            if (self?.Image.image?.size.width)! > (self?.Image.frame.size.width)!, (self?.Image.image?.size.height)! > (self?.Image.frame.size.height)! {
+                                //too big
+                               self?.Image.contentMode = UIViewContentMode.scaleAspectFit
+                            } else {
+                                self?.Image.contentMode = UIViewContentMode.center
+                                self?.Image?.sizeToFit()
+                            }
                         }
                     }
                 } else {
