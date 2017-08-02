@@ -44,14 +44,14 @@ class TweetTableViewController: UITableViewController, UITextFieldDelegate {
     //Twitter request
     private func twitterRequest() -> Twitter.Request? {
         if let query = searchText, !query.isEmpty {
-            return Twitter.Request(search: query, count: 100) //convence init
+            return Twitter.Request(search: "\(query) -filter:safe -filter:retweets", count: 100) //convence init
         }
         return nil
     }
     //Twitter search
     private var lastTwitterRequest: Twitter.Request? // for weak self checking
     private func searchForTweets() {
-        if let request = twitterRequest() {
+        if let request = lastTwitterRequest?.newer ?? twitterRequest() {
             lastTwitterRequest = request
             request.fetchTweets{ [weak self] newTweets in
                 DispatchQueue.main.async {
@@ -66,6 +66,10 @@ class TweetTableViewController: UITableViewController, UITextFieldDelegate {
             self.refreshControl?.endRefreshing()
         }
     }
+    @IBAction func refresh(_ sender: UIRefreshControl) {
+        searchForTweets()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.estimatedRowHeight = tableView.rowHeight
@@ -101,9 +105,9 @@ class TweetTableViewController: UITableViewController, UITextFieldDelegate {
         }
         return cell
     }
-//    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-//        return "\(tweets.count-section)" + " Header"
-//    }
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return "\(tweets.count-section)" + " Header"
+    }
 //    override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
 //        return "\(tweets.count-section)" + " Footer"
 //    }

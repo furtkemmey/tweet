@@ -24,16 +24,31 @@ class TweetDetailTableTableViewCell: UITableViewCell {
     @IBOutlet weak var hashTagLabel: UILabel!
 
     var tweetData: String? { didSet{ updateUI() } }
-    
+    var sections: Int?
     private func updateUI() {
-        hashTagLabel?.text = tweetData
-//        if let section =  sections{
-//            switch section {
-//            case 0:
-//                hashTagLabel?.text = tweetDataHashTag
-//            default:
-//                hashTagLabel?.text = " "
-//            }
-//        }
+        let attributesBlue = [NSForegroundColorAttributeName: UIColor.blue]
+        let attributesBrown = [NSForegroundColorAttributeName: UIColor.brown]
+        let attributesOrange = [NSForegroundColorAttributeName: UIColor.orange]
+        guard let tweetDataString = tweetData,
+              let section = sections
+        else { return  }
+        
+        let attTextString = NSMutableAttributedString(string: (tweetDataString))// text label
+            switch section {
+            case 0:
+                attTextString.addAttributes( attributesBrown , range: NSRange(location: 0, length: tweetDataString.count ) )
+            case 1:
+                attTextString.addAttributes( attributesBlue , range: NSRange(location: 0, length: tweetDataString.count ) )
+            case 2:
+                attTextString.addAttributes( attributesOrange , range: NSRange(location: 0, length: tweetDataString.count ) )
+            default:
+                hashTagLabel?.text = " "
+        }
+        hashTagLabel.attributedText = attTextString
+    }
+}
+extension String {
+    var count: Int {
+        return self.characters.count
     }
 }

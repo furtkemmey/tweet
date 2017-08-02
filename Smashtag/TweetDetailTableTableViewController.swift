@@ -22,7 +22,7 @@ class TweetDetailTableTableViewController: UITableViewController {
                 self.ImageURL = tweet?.media[0].url
             } else {
                 //get image
-//                self.ImageURL = tweet?.user.profileImageURL
+                self.ImageURL = tweet?.user.profileImageURL
             }
         }
     }
@@ -44,6 +44,7 @@ class TweetDetailTableTableViewController: UITableViewController {
                             } else {
                                 self?.Image.contentMode = UIViewContentMode.center
                                 self?.Image?.sizeToFit()
+//                                self?.Image?.frame = CGRect(x: 0, y: 0, width: (self?.Image.frame.size.width)!, height: (self?.Image.image?.size.height)!)
                             }
                         }
                     }
@@ -101,13 +102,16 @@ class TweetDetailTableTableViewController: UITableViewController {
         if let hashTagCell = cell as? TweetDetailTableTableViewCell {
             switch indexPath.section {
             case 0:
+                hashTagCell.sections = 0
                 hashTagCell.tweetData = tweet?.hashtags[indexPath.row].keyword
             case 1:
                 if let keyword = tweet?.urls[indexPath.row].keyword {
+                    hashTagCell.sections = 1
                     hashTagCell.tweetData = keyword
                 }
             case 2:
                 if let keyword = tweet?.userMentions[indexPath.row].keyword {
+                    hashTagCell.sections = 2
                     hashTagCell.tweetData = keyword
                 }
             default:
