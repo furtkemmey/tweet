@@ -9,6 +9,7 @@
 import UIKit
 import Twitter
 
+
 class TweetDetailTableTableViewCell: UITableViewCell {
 
     override func awakeFromNib() {
@@ -35,11 +36,11 @@ class TweetDetailTableTableViewCell: UITableViewCell {
         
         let attTextString = NSMutableAttributedString(string: (tweetDataString))// text label
             switch section {
-            case 0:
+            case sectionEnum.hashTag.rawValue:
                 attTextString.addAttributes( attributesBrown , range: NSRange(location: 0, length: tweetDataString.count ) )
-            case 1:
+            case sectionEnum.url.rawValue:
                 attTextString.addAttributes( attributesBlue , range: NSRange(location: 0, length: tweetDataString.count ) )
-            case 2:
+            case sectionEnum.mention.rawValue:
                 attTextString.addAttributes( attributesOrange , range: NSRange(location: 0, length: tweetDataString.count ) )
             default:
                 hashTagLabel?.text = " "

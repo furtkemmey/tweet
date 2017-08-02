@@ -9,10 +9,12 @@
 import UIKit
 import Twitter
 
+enum sectionEnum: Int {
+    case hashTag = 0
+    case url = 1
+    case mention = 2
+}
 class TweetDetailTableTableViewController: UITableViewController {
-
-    
-    
     //Model
     var tweet: Twitter.Tweet?{ didSet{ updateUI() } }
     
@@ -26,7 +28,12 @@ class TweetDetailTableTableViewController: UITableViewController {
             }
         }
     }
-
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        tableView.estimatedRowHeight = tableView.rowHeight
+        tableView.rowHeight = UITableViewAutomaticDimension
+    }
     @IBOutlet weak var Image: UIImageView!
     var  ImageURL: URL? {
         didSet {
@@ -75,17 +82,17 @@ class TweetDetailTableTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
-        case 0:
+        case sectionEnum.hashTag.rawValue:
             if let count = tweet?.hashtags.count {
                 return count
             }
             return 0
-        case 1:
+        case sectionEnum.url.rawValue:
             if let count = tweet?.urls.count {
                 return count
             }
             return 0
-        case 2:
+        case sectionEnum.mention.rawValue:
             if let count = tweet?.userMentions.count {
                 return count
             }
@@ -101,15 +108,15 @@ class TweetDetailTableTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "hashTag", for: indexPath)
         if let hashTagCell = cell as? TweetDetailTableTableViewCell {
             switch indexPath.section {
-            case 0:
+            case sectionEnum.hashTag.rawValue:
                 hashTagCell.sections = 0
                 hashTagCell.tweetData = tweet?.hashtags[indexPath.row].keyword
-            case 1:
+            case sectionEnum.url.rawValue:
                 if let keyword = tweet?.urls[indexPath.row].keyword {
                     hashTagCell.sections = 1
                     hashTagCell.tweetData = keyword
                 }
-            case 2:
+            case sectionEnum.mention.rawValue:
                 if let keyword = tweet?.userMentions[indexPath.row].keyword {
                     hashTagCell.sections = 2
                     hashTagCell.tweetData = keyword
@@ -123,16 +130,46 @@ class TweetDetailTableTableViewController: UITableViewController {
     }
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch section {
-        case 0:
+        case sectionEnum.hashTag.rawValue:
             return "HashTag-\(section)"
-        case 1:
+        case sectionEnum.url.rawValue:
             return "URL-\(section)"
-        case 2:
+        case sectionEnum.mention.rawValue:
             return "Mentions-\(section)"
         default:
             return nil
         }
     }
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        switch indexPath.section {
+//        case sectionEnum.hashTag.rawValue:
+            
+        case sectionEnum.url.rawValue:
+//            if let cell = tableView.cellForRow(at: indexPath) {
+                if let keyword = tweet?.urls[indexPath.row].keyword {
+                    openURL(keyword)
+                }
+//            }
+            tableView.deselectRow(at: indexPath, animated: true)
+//        case sectionEnum.mention.rawValue:
+           
+        default:
+            return
+        }
+    }
+
+    func openURL(_ urlString: String?) {
+        if let URLString0 = urlString, let URLString = URL(string: URLString0) {
+            if #available(iOS 10.0, *) {
+                let options = [UIApplicationOpenURLOptionUniversalLinksOnly : false]
+                UIApplication.shared.open(URLString, options: options, completionHandler: nil)
+            }else {
+                UIApplication.shared.openURL(URLString)
+            }
+        }
+    }
+
+
 //    override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
 //        switch section {
 //        case 0:
@@ -143,11 +180,6 @@ class TweetDetailTableTableViewController: UITableViewController {
 //            return nil
 //        }
 //    }
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        tableView.estimatedRowHeight = tableView.rowHeight
-        tableView.rowHeight = UITableViewAutomaticDimension
-    }
 
 
 }
