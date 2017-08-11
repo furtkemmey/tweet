@@ -11,7 +11,7 @@ import Twitter
 
 class TweetTableViewController: UITableViewController, UITextFieldDelegate {
     //MARK:- Model or interface
-    private var tweets = [Array<Tweet>]() {
+    private var tweets = [Array<Twitter.Tweet>]() {
         didSet {
             //print(tweets[0])
         }
@@ -33,6 +33,11 @@ class TweetTableViewController: UITableViewController, UITextFieldDelegate {
         didSet{
             searchTextField.delegate = self
         }
+    }
+    //insert tweets
+    func insertTweets(_ newTweets: [Twitter.Tweet]) {
+        self.tweets.insert(newTweets, at: 0)
+        self.tableView.insertSections([0], with: .fade)
     }
     //delegate
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -56,8 +61,7 @@ class TweetTableViewController: UITableViewController, UITextFieldDelegate {
             request.fetchTweets{ [weak self] newTweets in
                 DispatchQueue.main.async {
                     if request == self?.lastTwitterRequest {//check the request is really we want
-                        self?.tweets.insert(newTweets, at: 0)
-                        self?.tableView.insertSections([0], with: .fade)
+                        self?.insertTweets(newTweets)
                     }
                     self?.refreshControl?.endRefreshing()
                 }
@@ -91,7 +95,7 @@ class TweetTableViewController: UITableViewController, UITextFieldDelegate {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         //data
-        let tweet: Tweet = tweets[indexPath.section][indexPath.row]
+        let tweet: Twitter.Tweet = tweets[indexPath.section][indexPath.row]
         //cell
         let cell = tableView.dequeueReusableCell(withIdentifier: "Tweet", for: indexPath)
 
@@ -116,17 +120,17 @@ class TweetTableViewController: UITableViewController, UITextFieldDelegate {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let identifier = segue.identifier {
             switch identifier {
-            case "tweetDetail":
-                if let cell = sender as? TweetTableViewCell, let indexPath = tableView.indexPath(for: cell) {
-                    if let VCDetail = segue.destination as? TweetDetailViewController {
-                        let tweet: Tweet = tweets[indexPath.section][indexPath.row]
-                        VCDetail.tweet = tweet
-                    }
-                }
+//            case "tweetDetail":
+//                if let cell = sender as? TweetTableViewCell, let indexPath = tableView.indexPath(for: cell) {
+//                    if let VCDetail = segue.destination as? TweetDetailViewController {
+//                        let tweet: Twitter.Tweet = tweets[indexPath.section][indexPath.row]
+//                        VCDetail.tweet = tweet
+//                    }
+//                }
             case "tweetDetailTable":
                 if let cell = sender as? TweetTableViewCell, let indexPath = tableView.indexPath(for: cell) {
                     if let VCDetail = segue.destination as? TweetDetailTableTableViewController {
-                        let tweet: Tweet = tweets[indexPath.section][indexPath.row]
+                        let tweet: Twitter.Tweet = tweets[indexPath.section][indexPath.row]
                         VCDetail.tweet = tweet
                     }
                 }

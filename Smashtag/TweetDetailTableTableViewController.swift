@@ -14,6 +14,7 @@ enum sectionEnum: Int {
     case url = 1
     case mention = 2
 }
+
 class TweetDetailTableTableViewController: UITableViewController {
     //Model
     var tweet: Twitter.Tweet?{ didSet{ updateUI() } }
